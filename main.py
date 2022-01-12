@@ -20,15 +20,6 @@ def send_welcome(message):
 	markup.add(itembtn1, itembtn2, itembtn3)
 	bot.send_message(message.chat.id, "Выберите пол:", reply_markup=markup)
 
-# @bot.message_handler(func=lambda m: m.text == "Мужской" or m.text == "Женский" or m.text == "Оба")
-# def echo_all(message):
-# 	if message.text == "Мужской":
-# 		bot.send_message(message.chat.id, get_name(0))
-# 	elif message.text == "Женский":
-# 		bot.send_message(message.chat.id, get_name(1))
-# 	elif message.text == "Оба":
-# 		bot.send_message(message.chat.id, get_name())
-
 @bot.message_handler(func=lambda m: m.text == "Мужской" or m.text == "Женский" or m.text == "Оба")
 def echo_all(message):
 	global sex
