@@ -20,6 +20,18 @@ def send_welcome(message):
 	markup.add(itembtn1, itembtn2, itembtn3)
 	bot.send_message(message.chat.id, "Выберите пол:", reply_markup=markup)
 
+@bot.message_handler(func=lambda m: m.text == "Повторить последнюю команду")
+def echo_all(message):
+	markup = types.ReplyKeyboardMarkup(row_width=2)
+	itembtn1 = types.KeyboardButton('Мужской')
+	itembtn2 = types.KeyboardButton('Женский')
+	itembtn3 = types.KeyboardButton('Оба')
+	itembtn4 = types.KeyboardButton('Повторить последнюю команду')
+	markup.row(itembtn1, itembtn2)
+	markup.row(itembtn3)
+	markup.row(itembtn4)
+	bot.send_message(message.chat.id, make_answer(sex, format, ammount), reply_markup=markup)
+
 @bot.message_handler(func=lambda m: m.text == "Мужской" or m.text == "Женский" or m.text == "Оба")
 def echo_all(message):
 	global sex
@@ -60,7 +72,10 @@ def echo_all(message):
 	itembtn1 = types.KeyboardButton('Мужской')
 	itembtn2 = types.KeyboardButton('Женский')
 	itembtn3 = types.KeyboardButton('Оба')
-	markup.add(itembtn1, itembtn2, itembtn3)
+	itembtn4 = types.KeyboardButton('Повторить последнюю команду')
+	markup.row(itembtn1, itembtn2)
+	markup.row(itembtn3)
+	markup.row(itembtn4)
 	bot.send_message(message.chat.id, make_answer(sex, format, ammount), reply_markup=markup)
 
 def make_answer(sex, format, ammount):
