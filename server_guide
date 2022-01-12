@@ -15,17 +15,6 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 
-[Unit]
-Description=My bot
-After=multi-user.target
- 
-[Service]
-Type=idle
-ExecStart=/usr/bin/python /путь/до/скрипта/bot.py
-Restart=always
- 
-[Install]
-WantedBy=multi-user.target
 2. После этого в консоли выполняем:
 
 sudo systemctl daemon-reload
