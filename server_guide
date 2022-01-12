@@ -1,0 +1,44 @@
+1. Создаём файл демона:
+sudo nano /etc/systemd/system/bot.service
+
+Вставляем туда следующее:
+
+[Unit]
+Description=My bot
+After=multi-user.target
+ 
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /путь/до/скрипта/bot.py
+Restart=always
+ 
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=My bot
+After=multi-user.target
+ 
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /путь/до/скрипта/bot.py
+Restart=always
+ 
+[Install]
+WantedBy=multi-user.target
+2. После этого в консоли выполняем:
+
+sudo systemctl daemon-reload
+sudo systemctl enable bot.service
+sudo systemctl start bot.service
+
+3. Вспомогательные команды:
+
+Чтобы остановить бот:
+sudo systemctl stop bot.service
+
+Чтобы удалить из автозагрузки:
+sudo systemctl disable bot.service
+
+Чтобы проверить работу демона:
+sudo systemctl status bot.service
