@@ -54,22 +54,17 @@ def echo_all(message):
 		format = 1
 	elif message.text == "Имя":
 		format = 10
-	markup = types.ReplyKeyboardMarkup(row_width=2)
-	itembtn1 = types.KeyboardButton('5')
-	itembtn2 = types.KeyboardButton('10')
-	itembtn3 = types.KeyboardButton('1')
+	markup = types.ReplyKeyboardMarkup(row_width=3)
+	itembtn1 = types.KeyboardButton('1')
+	itembtn2 = types.KeyboardButton('5')
+	itembtn3 = types.KeyboardButton('10')
 	markup.add(itembtn1, itembtn2, itembtn3)
 	bot.send_message(message.chat.id, "Выберите колличество:", reply_markup=markup)
 
-@bot.message_handler(func=lambda m: m.text == "5" or m.text == "10" or m.text == "1")
+@bot.message_handler(func=lambda m: int(m.text) > 0)
 def echo_all(message):
 	global ammount
-	if message.text == "1":
-		ammount = 1
-	elif message.text == "5":
-		ammount = 5
-	elif message.text == "10":
-		ammount = 10
+	ammount = int(message.text)
 	markup = types.ReplyKeyboardMarkup(row_width=2)
 	itembtn1 = types.KeyboardButton('Мужской')
 	itembtn2 = types.KeyboardButton('Женский')
@@ -79,8 +74,8 @@ def echo_all(message):
 
 def make_answer(sex, format, ammount):
 	res = ""
-	for i in range(ammount):
-		name = get_name(sex)
+	names = get_name(sex, ammount)
+	for name in names:
 		if format == 1:
 			splitname = name.split()
 			name = '{} {}. {}.'.format(splitname[0], splitname[1][0], splitname[2][0])

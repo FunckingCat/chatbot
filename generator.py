@@ -7,4 +7,4 @@ def get_name(sex=10, count = 1):
     res = requests.get(url)
     tree = lxml.html.document_fromstring(res.text)
     name = tree.xpath('//*[@id="result_tiles"]/div/div/div/div/span/text()')
-    return name[0]
+    return name
