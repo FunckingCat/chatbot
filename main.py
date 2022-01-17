@@ -60,21 +60,18 @@ def send_welcome(message):
 
 @bot.message_handler(func=lambda m: m.text in genders.values())
 def gernder_handler(message):
-	#global human
 	get_user(message.from_user.id)['gender'] = message.text
 	markup = make_markup(races)
 	bot.send_message(message.chat.id, msg_race, reply_markup=markup)
 
 @bot.message_handler(func=lambda m: m.text in races.values())
 def race_handler(message):
-	#global human
 	get_user(message.from_user.id)['race'] = message.text
 	markup = make_markup(classes)
 	bot.send_message(message.chat.id, msg_class, reply_markup=markup)
 
 @bot.message_handler(func=lambda m: m.text in classes.values())
 def class_handler(message):
-	#global human
 	get_user(message.from_user.id)['class'] = message.text
 	if get_user(message.from_user.id)['gender'] == 'Мужской':
 		markup = make_markup(outlook_man)
@@ -84,7 +81,6 @@ def class_handler(message):
 
 @bot.message_handler(func=lambda m: m.text in (list(outlook_man.values()) + list(outlook_woman.values())))
 def outlook_handler(message):
-	#global human
 	get_user(message.from_user.id)['outlook'] = message.text
 	if get_user(message.from_user.id)['gender'] == 'Мужской':
 		markup = make_markup(kindness_man)
@@ -94,7 +90,6 @@ def outlook_handler(message):
 
 @bot.message_handler(func=lambda m: m.text in (list(kindness_man.values()) + list(kindness_woman.values())))
 def kindness_handler(message):
-	#global human
 	get_user(message.from_user.id)['kindness'] = message.text
 	markup = make_markup(cmd)
 	bot.send_message(message.chat.id, generate_name(get_user(message.from_user.id)), reply_markup=markup)
