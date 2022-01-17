@@ -1,10 +1,8 @@
-import requests
-from lxml import etree
-import lxml.html
+from random import randint
 
-def get_name(sex=10, count = 1):
-    url = 'https://randomus.ru/name?type=0&sex=' + str(sex) + '&count=' + str(count)
-    res = requests.get(url)
-    tree = lxml.html.document_fromstring(res.text)
-    name = tree.xpath('//*[@id="result_tiles"]/div/div/div/div/span/text()')
-    return name
+def get_name(race='human', gender='man'):
+    file = open('names.txt', encoding='UTF-8')
+    read = [''.join(x.split('\n')).split(':') for x in file]
+    names = dict(zip([x.pop(0) for x in read], [x[0].split(', ') for x in read]))
+    file.close()
+    return (names[race+'-'+gender][randint(0, len(names[race+'-'+gender]))] + ' ' + names[race+'-subname'][randint(0, len(names[race+'-subname']))])
