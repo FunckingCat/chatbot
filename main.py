@@ -31,23 +31,7 @@ def	make_markup(ch_dict): #Cоздает раскладку клавиатуры
 		i += 2
 	return markup
 
-'''
-def	val_in_dict(string, ch_dict):
-	for key in ch_dict:
-		if ch_dict[key] == string:
-			return True
-	return False
-
-def dict_to_string(d):
-	st = ''
-	for key in d:
-		st += d[key] + ' '
-	return st
-'''
-
-
 users = {}
-
 
 class User:
 	def __init__(self):
