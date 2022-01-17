@@ -2,92 +2,98 @@ from typing import Text
 import telebot
 from telebot import apihelper
 from telebot import types
-from generator import get_name
+from const import *
 
-TOKEN = '5001939735:AAHRF8K892p358JgH5cwApzWh2obwxnG-44'
+#Ссылка на тест бота @test9182736419283764123_bot
+#TOKEN = '5001939735:AAHRF8K892p358JgH5cwApzWh2obwxnG-44' # Рабочий API
+TOKEN = '5047514937:AAEb3RBO2tkYRqMa7wbE6SwuDv3T2sZAogY' #Тест API
 bot = telebot.TeleBot(TOKEN)
 
-sex = 10
-format = 0
-ammount = 1
+#Вот этот словарь передается в генератор
+human = {
+	'gender'   : '',
+	'race'     : '',
+	'class'    : '',
+	'outlook'  : '',
+	'kindness' : '',
+}
+
+def	make_markup(ch_dict): #Cоздает раскладку клавиатуры по словарю
+	if (len(ch_dict) <= 5):
+		markup = types.ReplyKeyboardMarkup(row_width=1)
+	else:
+		markup = types.ReplyKeyboardMarkup(row_width=2)
+	btns = []
+	for key in ch_dict:
+		btn = types.KeyboardButton(ch_dict[key])
+		btns.append(btn)
+	i = 0
+	while i < len(btns):
+		if (i < len(btns) - 1):
+			markup.add(btns[i], btns[i + 1])
+		else:
+			markup.add(btns[i])
+		i += 2
+	return markup
+
+def	val_in_dict(string, ch_dict):
+	for key in ch_dict:
+		if ch_dict[key] == string:
+			return True
+	return False
+
+def dict_to_string(d):
+	st = ''
+	for key in d:
+		st += d[key] + ' '
+	return st
+
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-	markup = types.ReplyKeyboardMarkup(row_width=2)
-	itembtn1 = types.KeyboardButton('Мужской')
-	itembtn2 = types.KeyboardButton('Женский')
-	itembtn3 = types.KeyboardButton('Оба')
-	markup.add(itembtn1, itembtn2, itembtn3)
-	bot.send_message(message.chat.id, "Выберите пол:", reply_markup=markup)
+	markup = make_markup(genders)
+	photo = open( welcome_image, 'rb')
+	bot.send_photo(message.chat.id, photo)
+	bot.send_message(message.chat.id, msg_gender, reply_markup=markup)
 
-@bot.message_handler(func=lambda m: m.text == "Повторить последнюю команду")
-def echo_all(message):
-	markup = types.ReplyKeyboardMarkup(row_width=2)
-	itembtn1 = types.KeyboardButton('Мужской')
-	itembtn2 = types.KeyboardButton('Женский')
-	itembtn3 = types.KeyboardButton('Оба')
-	itembtn4 = types.KeyboardButton('Повторить последнюю команду')
-	markup.row(itembtn1, itembtn2)
-	markup.row(itembtn3)
-	markup.row(itembtn4)
-	bot.send_message(message.chat.id, make_answer(sex, format, ammount), reply_markup=markup)
+@bot.message_handler(func=lambda m: val_in_dict(m.text, genders))
+def gernder_handler(message):
+	global human
+	human['gender'] = message.text
+	markup = make_markup(races)
+	bot.send_message(message.chat.id, msg_race, reply_markup=markup)
 
-@bot.message_handler(func=lambda m: m.text == "Мужской" or m.text == "Женский" or m.text == "Оба")
-def echo_all(message):
-	global sex
-	if message.text == "Мужской":
-		sex = 0
-	elif message.text == "Женский":
-		sex = 1
-	elif message.text == "Оба":
-		sex = 10
-	markup = types.ReplyKeyboardMarkup(row_width=2)
-	itembtn1 = types.KeyboardButton('Полное ФИО')
-	itembtn2 = types.KeyboardButton('Фиамилия и инициалы')
-	itembtn3 = types.KeyboardButton('Имя')
-	markup.add(itembtn1, itembtn2, itembtn3)
-	bot.send_message(message.chat.id, "Выберите формат:", reply_markup=markup)
+@bot.message_handler(func=lambda m: val_in_dict(m.text, races))
+def race_handler(message):
+	global human
+	human['race'] = message.text
+	markup = make_markup(classes)
+	bot.send_message(message.chat.id, msg_class, reply_markup=markup)
 
-@bot.message_handler(func=lambda m: m.text == "Полное ФИО" or m.text == "Фиамилия и инициалы" or m.text == "Имя")
-def echo_all(message):
-	global format
-	if message.text == "Полное ФИО":
-		format = 0
-	elif message.text == "Фиамилия и инициалы":
-		format = 1
-	elif message.text == "Имя":
-		format = 10
-	markup = types.ReplyKeyboardMarkup(row_width=3)
-	itembtn1 = types.KeyboardButton('1')
-	itembtn2 = types.KeyboardButton('5')
-	itembtn3 = types.KeyboardButton('10')
-	markup.add(itembtn1, itembtn2, itembtn3)
-	bot.send_message(message.chat.id, "Выберите колличество:", reply_markup=markup)
+@bot.message_handler(func=lambda m: val_in_dict(m.text, classes))
+def calss_handler(message):
+	global human
+	human['class'] = message.text
+	markup = make_markup(outlook_man)
+	bot.send_message(message.chat.id, msg_outlook, reply_markup=markup)
 
-@bot.message_handler(func=lambda m: int(m.text) > 0)
-def echo_all(message):
-	global ammount
-	ammount = int(message.text)
-	markup = types.ReplyKeyboardMarkup(row_width=2)
-	itembtn1 = types.KeyboardButton('Мужской')
-	itembtn2 = types.KeyboardButton('Женский')
-	itembtn3 = types.KeyboardButton('Оба')
-	itembtn4 = types.KeyboardButton('Повторить последнюю команду')
-	markup.row(itembtn1, itembtn2)
-	markup.row(itembtn3)
-	markup.row(itembtn4)
-	bot.send_message(message.chat.id, make_answer(sex, format, ammount), reply_markup=markup)
+@bot.message_handler(func=lambda m: val_in_dict(m.text, outlook_man))
+def outlook_handler(message):
+	global human
+	human['outlook'] = message.text
+	markup = make_markup(kindness_man)
+	bot.send_message(message.chat.id, msg_kindness, reply_markup=markup)
 
-def make_answer(sex, format, ammount):
-	res = ""
-	names = get_name(sex, ammount)
-	for name in names:
-		if format == 1:
-			splitname = name.split()
-			name = '{} {}. {}.'.format(splitname[0], splitname[1][0], splitname[2][0])
-		elif format == 10:
-			name = name.split()[1]
-		res += name + '\n'
-	return res
+@bot.message_handler(func=lambda m: val_in_dict(m.text, kindness_man))
+def kindness_handler(message):
+	global human
+	human['kindness'] = message.text
+	markup = make_markup(cmd)
+	bot.send_message(message.chat.id, dict_to_string(human), reply_markup=markup)
+
+@bot.message_handler()
+def default_handler(message):
+	markup = make_markup(cmd)
+	bot.send_message(message.chat.id, msg_default, reply_markup=markup)
 
 bot.infinity_polling()

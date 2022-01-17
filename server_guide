@@ -4,12 +4,12 @@ sudo nano /etc/systemd/system/bot.service
 Вставляем туда следующее:
 
 [Unit]
-Description=My bot
+Description=ChatBot
 After=multi-user.target
  
 [Service]
 Type=idle
-ExecStart=/usr/bin/python /путь/до/скрипта/bot.py
+ExecStart=/usr/bin/python3.10 /home/std/chatbot/main.py
 Restart=always
  
 [Install]

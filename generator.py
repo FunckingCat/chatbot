@@ -11,7 +11,7 @@ def parse(): #просто парсит файл
 
 
 def generate_name(race='human', gender='man'): #генерирует имя
-    names = parse
+    names = parse()
     first_name = names[race+'-'+gender][randint(0, len(names[race+'-'+gender]))] # из передаваемых функции аргументов race и gender формируются ключи, по которым находятся списки с именами
     last_name = names[race+'-subname'][randint(0, len(names[race+'-subname']))] # и при через randint беруются случайные комбинации
     return (first_name + ' ' + last_name)
