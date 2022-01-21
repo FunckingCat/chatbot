@@ -9,4 +9,4 @@ def generate_name(list):
     if list['race'] == 'Дварф' or list['race'] == 'Гном':
         clan = choice(names[list['race']+'-'+'clan'])
         return ' '.join([x for x in [behavior, list['class'], first_name, last_name, 'из клана', clan] if x])
-    return (' '.join([behavior, list['class'], first_name, last_name]))
+    return (' '.join([x for x in [behavior, list['class'], first_name, last_name] if x]))
