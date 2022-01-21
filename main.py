@@ -65,7 +65,7 @@ def pre_menu_state(msg):
     #markup = make_markup(genders)
     photo = open( welcome_image, 'rb')
     bot.send_photo(msg.chat.id, photo)
-    bot.send_message(msg.chat.id, 'Выберите: сгенерировать новое имя или изменить ваше имя', reply_markup=markup)
+    bot.send_message(msg.chat.id, 'Выберите: сгенерировать новое имя или составить ваше имя', reply_markup=markup)
     get_user(msg).state = 'MENU'
 
 
