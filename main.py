@@ -95,7 +95,7 @@ def select_race_state(msg):
     else:
         markup = make_markup(races)
         bot.send_message(msg.chat.id, 'Выберите расу:', reply_markup=markup)
-        
+
 @bot.message_handler(func=lambda msg: get_user(msg).state == 'SELECT_CLASS')
 def select_class_state(msg):
     if msg.text in classes.values():
@@ -118,8 +118,8 @@ def select_sex_state(msg):
         select_outlook_state(msg)
     else:
         markup = make_markup(genders)
-        bot.send_message(msg.chat.id, 'Выберите секс:', reply_markup=markup)
-        
+        bot.send_message(msg.chat.id, 'Выберите пол:', reply_markup=markup)
+
 @bot.message_handler(func=lambda msg: get_user(msg).state == 'SELECT_OUTLOOK')
 def select_outlook_state(msg):
     if msg.text in outlooks.values():
