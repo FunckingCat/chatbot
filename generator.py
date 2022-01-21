@@ -1,12 +1,19 @@
 from random import choice
 from const import *
 
-def generate_name(list):
 
-    first_name = choice(names[list["race"]+'-'+list["gender"]])
-    last_name = choice(names[list["race"]+'-subname'])
-    behavior = list['outlook'] + '-' + list['kindness']
-    if list['race'] == 'Дварф' or list['race'] == 'Гном':
-        clan = choice(names[list['race']+'-'+'clan'])
-        return ' '.join([x for x in [behavior, list['class'], first_name, last_name, 'из клана', clan] if x])
-    return (' '.join([x for x in [behavior, list['class'], first_name, last_name] if x]))
+def generate_name(data):
+
+    first_name = choice(names[data['race']+'-'+data['gender']])
+    last_name = choice(names[data['race']+'-subname'])
+    behavior = data['outlook']
+    if data['race'] == 'Дварф' or data['race'] == 'Гном':
+        clan = choice(names[data['race']+'-'+'clan'])
+        if data['name'] == '__RANDOM__':
+            return ' '.join([x for x in [behavior, data['class'], first_name, last_name, 'из клана', clan] if x])
+        else:
+            return ' '.join([x for x in [behavior, data['class'], data['name'], 'из клана', clan] if x])
+    if data['name'] == '__RANDOM__':
+        return (' '.join([x for x in [behavior, data['class'], first_name, last_name] if x]))
+    else:
+        return (' '.join([x for x in [behavior, data['class'], data['name']] if x]))
