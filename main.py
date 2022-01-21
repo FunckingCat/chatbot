@@ -6,8 +6,8 @@ from generator import generate_name
 from const import *
 
 #Ссылка на тест бота @test9182736419283764123_bot
-#TOKEN = '5001939735:AAHRF8K892p358JgH5cwApzWh2obwxnG-44' # Рабочий API
-TOKEN = '5047514937:AAEb3RBO2tkYRqMa7wbE6SwuDv3T2sZAogY' #Тест API
+TOKEN = '5001939735:AAHRF8K892p358JgH5cwApzWh2obwxnG-44' # Рабочий API
+#TOKEN = '5047514937:AAEb3RBO2tkYRqMa7wbE6SwuDv3T2sZAogY' #Тест API
 bot = telebot.TeleBot(TOKEN)
 
 #Вот этот словарь передается в генератор
