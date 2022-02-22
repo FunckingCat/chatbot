@@ -5,15 +5,11 @@ from telebot import types
 from generator import generate_name
 from const import *
 
-#Ссылка на тест бота @test9182736419283764123_bot
-TOKEN = '5001939735:AAHRF8K892p358JgH5cwApzWh2obwxnG-44' # Рабочий API
-#TOKEN = '5047514937:AAEb3RBO2tkYRqMa7wbE6SwuDv3T2sZAogY' #Тест API
+TOKEN = 'YOUR TOKEN THERE'
 bot = telebot.TeleBot(TOKEN)
 
-#Вот этот словарь передается в генератор
 
-
-def make_markup(ch_dict): #Cоздает раскладку клавиатуры по словарю
+def make_markup(ch_dict):
     if (len(ch_dict) <= 5):
         markup = types.ReplyKeyboardMarkup(row_width=1)
     else:
@@ -62,7 +58,6 @@ def start_command(msg):
 @bot.message_handler(func=lambda msg: get_user(msg).state == 'PRE_MENU')
 def pre_menu_state(msg):
     markup = make_markup(is_rand)
-    #markup = make_markup(genders)
     photo = open( welcome_image, 'rb')
     bot.send_photo(msg.chat.id, photo)
     bot.send_message(msg.chat.id, 'Выберите: сгенерировать новое имя или составить ваше имя', reply_markup=markup)
@@ -139,7 +134,6 @@ def output_name_state(msg):
 
 @bot.message_handler()
 def default_handler(msg):
-    #markup = make_markup(cmd)
     get_user(msg).state = 'PRE_MENU'
     bot.send_message(msg.chat.id, 'Друг, ты что то перепутал')
     pre_menu_state(msg)
